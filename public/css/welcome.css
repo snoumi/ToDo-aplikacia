@@ -1,0 +1,72 @@
+body{
+    background-image: url("/img/welcome-pozadie.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.button-container {
+    display: flex;
+    gap: 20px;
+    padding-left: 77%;
+    padding-top: 1%;
+}
+
+.custom-button {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #6A0DAD;
+    background-color: #fff;
+    border: 2px solid #6A0DAD;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.custom-button:hover {
+    background-color: #6A0DAD;
+    color: #fff;
+}
+
+.nádpis{
+padding-top: 5%;
+padding-left: 50%;
+font-size: 40px;
+text-align: center;
+color: rgb(116, 2, 145);
+font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.nádpis span{
+    display: inline-block;
+    transition: transform 0.5s;
+    animation: pulse 5s infinite;
+}
+
+@keyframes pulse {
+    0% { color: rgb(116, 2, 145);
+         transform:scale(1) ;}
+    50% { color: rgb(80, 0, 100);
+        transform:scale(1.1) }
+    100% { color: rgb(116, 2, 145);
+        transform:scale(1) }
+}
+
+.nádpis span:nth-child(1) { animation-delay: 0s; }
+.nádpis span:nth-child(2) { animation-delay: 0.5s; }
+.nádpis span:nth-child(3) { animation-delay: 1s; }
+.nádpis span:nth-child(4) { animation-delay: 1.5s; }
+.nádpis span:nth-child(5) { animation-delay: 2s; }
+.nádpis span:nth-child(6) { animation-delay: 2.5s; }
+.nádpis span:nth-child(7) { animation-delay: 3s; }
+.nádpis span:nth-child(8) { animation-delay: 3.5s; }
+.nádpis span:nth-child(9) { animation-delay: 4s; }
+.nádpis span:nth-child(10) { animation-delay: 4.5s; }
+
+.popis{
+padding-top: 2%;
+padding-left: 50%;
+font-size: 30px;
+text-align: center;
+color: rgb(0, 0, 0);
+}
