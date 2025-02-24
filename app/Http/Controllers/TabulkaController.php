@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tabulka;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class TabulkaController extends Controller
 {
@@ -12,7 +13,31 @@ class TabulkaController extends Controller
      */
     public function index()
     {
-        return view("tabulka.index");
+        $tabulkas = Tabulka::get()->map(function ($tabulka) {
+            $wrappedName = wordwrap($tabulka->name, 15, "\n", true);
+            $wrappedDescription = wordwrap($tabulka->description, 39, "\n", true);
+            $nameLines = substr_count($wrappedName, "\n") + 1;
+            $descriptionLines = explode("\n", $wrappedDescription);
+
+            if (count($descriptionLines) > $nameLines) {
+                $limitedDescription = array_slice($descriptionLines, 0, $nameLines);
+                $lastLineIndex = count($limitedDescription) - 1;
+                $limitedDescription[$lastLineIndex] .= '...';
+                $tabulka->description = implode("\n", $limitedDescription);
+                
+            } else {
+                $tabulka->description = $wrappedDescription;
+            }
+
+            $tabulka->name = nl2br($wrappedName);
+            $tabulka->description = nl2br($tabulka->description);
+    
+            return $tabulka;
+        });
+
+        return view("tabulka.index", [
+            'tabulkas' => $tabulkas
+        ]);
     }
 
     /**
@@ -40,7 +65,7 @@ class TabulkaController extends Controller
             "status" => $request->status == true ? 1:0,
         ]);
 
-        return redirect("/tabulka")->with("status","Category Created Successfully");
+        return redirect("/tabulka")->with("status","Úloha bola úspešne vytvorená");
     }
 
     /**
@@ -48,7 +73,7 @@ class TabulkaController extends Controller
      */
     public function show(Tabulka $tabulka)
     {
-        return view("tabulka.show");
+        return view("tabulka.show", compact('tabulka'));
     }
 
     /**
@@ -56,7 +81,7 @@ class TabulkaController extends Controller
      */
     public function edit(Tabulka $tabulka)
     {
-        return view("tabulka.edit");
+        return view("tabulka.edit", compact('tabulka'));
     }
 
     /**
@@ -64,7 +89,19 @@ class TabulkaController extends Controller
      */
     public function update(Request $request, Tabulka $tabulka)
     {
-        //
+        $request->validate([
+            "name" => "required|string|max:255",
+            "description" => "required|string|max:255",
+            "status" => "nullable",
+        ]);
+
+        $tabulka->update([
+            "name" => $request->name,
+            "description" => $request->description,
+            "status" => $request->status == true ? 1:0,
+        ]);
+
+        return redirect("/tabulka")->with("status","Úloha bola úspešne pozmenená");
     }
 
     /**
@@ -72,6 +109,7 @@ class TabulkaController extends Controller
      */
     public function destroy(Tabulka $tabulka)
     {
-        //
+        $tabulka->delete();
+        return redirect("/tabulka")->with("status","Úloha bola úspešne odstránená");
     }
 }

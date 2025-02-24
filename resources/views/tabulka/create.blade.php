@@ -7,8 +7,8 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Tabuľka úloh
-                        <a href="{{ url('tabulka/create') }}" class="btn btn-primary float-end">Pridaj úlohu</a>
+                    <h4>Vytvor úlohu
+                        <a href="{{ url('tabulka') }}" class="btn btn-primary float-end">Naspäť</a>
                     </h4>
                 </div>
                 <div class="card-body">
@@ -26,7 +26,7 @@
                         @error("description") <span class="text-danger">{{ $message }}</span> @enderror
                        </div>
                        <div class="mb-3">
-                        <label>Status</label>
+                        <label>Stav úlohy</label>
                         <br/>
                         <input type="checkbox" name="status" style="width:30px;height:30px;" />&#9989;=Dokončené, &#129001;=Aktuálne
                         @error("status") <span class="text-danger">{{ $message }}</span> @enderror
