@@ -14,6 +14,7 @@ class Tabulka extends Model
     protected $fillable = [
         "name",
         "description",
-        "status"
+        "status",
+        'tags'
     ];
 }

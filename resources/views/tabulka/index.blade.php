@@ -15,9 +15,11 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h4>Tabuľka úloh
                         <a href="{{ url("tabulka/create") }}" class="btn btn-primary float-end">Pridaj úlohu</a>
-                    </h4>
+                    <form action="{{ url('tabulka') }}" method="GET" class="d-flex justify-content-center mb-3">
+                     <input type="text" name="search" class="form-control w-50 me-2" placeholder="Hľadaj tag...">
+                     <button type="submit" class="btn btn-primary">Hľadať</button>
+                    </form>
                 </div>
                 <div class="card-body">
                     <table class="table table-stiped table-bordered">

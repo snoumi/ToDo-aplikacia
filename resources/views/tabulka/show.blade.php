@@ -25,6 +25,12 @@
                         </p>
                        </div>
                        <div class="mb-3">
+                        <label>Tagy:</label>
+                        <p style='border:1px solid #dee2e6;border-radius:15px;padding:5px'>
+                        {{ $tabulka->tags }}
+                        </p>
+                       </div>
+                       <div class="mb-3">
                         <label>Stav úlohy:</label>
                         <br/>
                         <p>

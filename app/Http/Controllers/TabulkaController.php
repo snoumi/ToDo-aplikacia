@@ -4,15 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Tabulka;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class TabulkaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $query = Tabulka::query();
+
+        if ($request->has('search')) {
+           $search = $request->input('search');
+           $query->where('tags', 'LIKE', "%$search%");
+        }
+
         $tabulkas = Tabulka::get()->map(function ($tabulka) {
             $wrappedName = wordwrap($tabulka->name, 15, "\n", true);
             $wrappedDescription = wordwrap($tabulka->description, 39, "\n", true);
@@ -57,12 +63,14 @@ class TabulkaController extends Controller
             "name" => "required|string|max:255",
             "description" => "required|string|max:255",
             "status" => "nullable",
+            "tags" => "nullable|string|max:255",
         ]);
 
         Tabulka::create([
             "name" => $request->name,
             "description" => $request->description,
             "status" => $request->status == true ? 1:0,
+            "tags" => $request->tags,
         ]);
 
         return redirect("/tabulka")->with("status","Úloha bola úspešne vytvorená");
@@ -93,12 +101,14 @@ class TabulkaController extends Controller
             "name" => "required|string|max:255",
             "description" => "required|string|max:255",
             "status" => "nullable",
+            "tags" => "nullable|string|max:255",
         ]);
 
         $tabulka->update([
             "name" => $request->name,
             "description" => $request->description,
             "status" => $request->status == true ? 1:0,
+            "tags" => $request->tags,
         ]);
 
         return redirect("/tabulka")->with("status","Úloha bola úspešne pozmenená");

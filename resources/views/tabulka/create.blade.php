@@ -26,6 +26,11 @@
                         @error("description") <span class="text-danger">{{ $message }}</span> @enderror
                        </div>
                        <div class="mb-3">
+                         <label>Tagy</label>
+                         <input type="text" name="tags" class="form-control" placeholder="napr. tag1, tag2, tag3">
+                         @error("tags") <span class="text-danger">{{ $message }}</span> @enderror
+                       </div>
+                       <div class="mb-3">
                         <label>Stav úlohy</label>
                         <br/>
                         <input type="checkbox" name="status" style="width:30px;height:30px;" />&#9989;=Dokončené, &#129001;=Nedokončené
