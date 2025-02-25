@@ -9,7 +9,9 @@ Route::get("/", function () {
     return view("welcome");
 });
 
+Route::middleware("auth")->group(function () {
 Route::resource("tabulka", TabulkaController::class);
+});
 
 Route::get("/login", function () {
     return view("login.blade.php");

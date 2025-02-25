@@ -29,7 +29,7 @@
                        <div class="mb-3">
                         <label>Stav úlohy</label>
                         <br/>
-                        <input type="checkbox" name="status" {{ $tabulka->status == 1 ? '&#9989Dokončené':'&#129001Nedokončené'}} style="width:30px;height:30px;" />&#9989;=Dokončené, &#129001;=Nedokončené
+                        <input type="checkbox" name="status" {{ $tabulka->status == 1 ? 'Checked':''}} style="width:30px;height:30px;" />&#9989;=Dokončené, &#129001;=Nedokončené
                         @error("status") <span class="text-danger">{{ $message }}</span> @enderror
                        </div>
                        <div class="mb-3">

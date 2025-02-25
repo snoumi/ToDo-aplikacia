@@ -28,7 +28,7 @@
                        <div class="mb-3">
                         <label>Stav úlohy</label>
                         <br/>
-                        <input type="checkbox" name="status" style="width:30px;height:30px;" />&#9989;=Dokončené, &#129001;=Aktuálne
+                        <input type="checkbox" name="status" style="width:30px;height:30px;" />&#9989;=Dokončené, &#129001;=Nedokončené
                         @error("status") <span class="text-danger">{{ $message }}</span> @enderror
                        </div>
                        <div class="mb-3">
