@@ -14,9 +14,9 @@ class TabulkaController extends Controller
     {
         $query = Tabulka::query();
 
-        if ($request->has('search')) {
-           $search = $request->input('search');
-           $query->where('tags', 'LIKE', "%$search%");
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->input('search');
+            $query->where('tags', 'LIKE', "%$search%");
         }
 
         $tabulkas = Tabulka::get()->map(function ($tabulka) {
@@ -42,7 +42,8 @@ class TabulkaController extends Controller
         });
 
         return view("tabulka.index", [
-            'tabulkas' => $tabulkas
+            'tabulkas' => $tabulkas,
+            'search' => $request->input('search')
         ]);
     }
 
