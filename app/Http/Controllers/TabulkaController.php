@@ -14,11 +14,16 @@ class TabulkaController extends Controller
     {
         $query = Tabulka::query();
 
+        $search = $request->session()->get('search');
+
         if ($request->has('search')) {
             $request->session()->put('search', $request->input('search'));
         }
-        
-        $search = $request->session()->get('search');
+
+        if ($request->has('clear')) {
+            $request->session()->forget('search');
+            return redirect()->route('tabulka.index');
+        }
 
         if ($request->has('search') && !empty($request->search)) {
             $search = $request->input('search');
@@ -58,7 +63,8 @@ class TabulkaController extends Controller
      */
     public function create()
     {
-        return view("tabulka.create");
+        $search = request('search');
+        return view("tabulka.create", compact('search'));
     }
 
     /**
@@ -81,7 +87,12 @@ class TabulkaController extends Controller
         ]);
 
         $search = $request->session()->get('search');
-        return redirect()->route('tabulka.index', ['search' => $search])->with("status", "Úloha bola úspešne vytvorená");
+        if ($search) {
+         return redirect()->route('tabulka.index', ['search' => $search])->with("status", "Úloha bola úspešne vytvorená");
+        } else {
+         return redirect()->route('tabulka.index')->with("status", "Úloha bola úspešne vytvorená");
+        }
+
 
     }
 
@@ -90,7 +101,8 @@ class TabulkaController extends Controller
      */
     public function show(Tabulka $tabulka)
     {
-        return view("tabulka.show", compact('tabulka'));
+        $search = request('search');
+        return view("tabulka.show", compact('tabulka', 'search'));
     }
 
     /**
@@ -98,7 +110,8 @@ class TabulkaController extends Controller
      */
     public function edit(Tabulka $tabulka)
     {
-        return view("tabulka.edit", compact('tabulka'));
+        $search = request('search');
+        return view("tabulka.edit", compact('tabulka', 'search'));
     }
 
     /**
@@ -121,7 +134,12 @@ class TabulkaController extends Controller
         ]);
 
         $search = $request->session()->get('search');
-        return redirect()->route('tabulka.index', ['search' => $search])->with("status", "Úloha bola úspešne pozmenená");
+        if ($search) {
+         return redirect()->route('tabulka.index', ['search' => $search])->with("status", "Úloha bola úspešne pozmenená");
+        } else {
+         return redirect()->route('tabulka.index')->with("status", "Úloha bola úspešne pozmenená");
+        }
+
 
 
     }
@@ -129,11 +147,17 @@ class TabulkaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tabulka $tabulka)
+    public function destroy(Request $request, Tabulka $tabulka)
     {
         $tabulka->delete();
-        $search = request('search') ?? session('search');
-        return redirect()->route('tabulka.index', ['search' => $search])->with("status", "Úloha bola úspešne odstránená");
+
+        $search = $request->session()->get('search');
+        if ($search) {
+         return redirect()->route('tabulka.index', ['search' => $search])->with("status", "Úloha bola úspešne odstránená");
+        } else {
+         return redirect()->route('tabulka.index')->with("status", "Úloha bola úspešne odstránená");
+        }
+
 
     }
 }

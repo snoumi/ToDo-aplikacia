@@ -23,7 +23,7 @@
 
                      
                          @if(request('search'))
-                          <a href="{{ url('tabulka') }}" class="btn btn-secondary ms-2">Zmazať tagy</a>
+                          <a href="{{ route('tabulka.index', ['clear' => 1]) }}" class="btn btn-secondary ms-2">Zmazať tagy</a>
                          @endif
                         </form>
                 </div>

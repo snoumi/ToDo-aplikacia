@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Tabulka;
 use App\Models\User;
-use Database\Seeders\TabulkaSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,8 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(20)->create();
-
-        $this->call(TabulkaSeeder::class);
+        User::factory()->count(20)->create();
+        Tabulka::factory()->count(20)->create();
     }
 }
