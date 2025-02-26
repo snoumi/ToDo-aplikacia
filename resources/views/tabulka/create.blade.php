@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4>Vytvor úlohu
-                        <a href="{{ url('tabulka') }}" class="btn btn-primary float-end">Naspäť</a>
+                        <a href="javascript:history.back()" class="btn btn-primary float-end">Naspäť</a>
                     </h4>
                 </div>
                 <div class="card-body">

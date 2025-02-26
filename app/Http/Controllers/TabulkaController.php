@@ -14,12 +14,18 @@ class TabulkaController extends Controller
     {
         $query = Tabulka::query();
 
+        if ($request->has('search')) {
+            $request->session()->put('search', $request->input('search'));
+        }
+        
+        $search = $request->session()->get('search');
+
         if ($request->has('search') && !empty($request->search)) {
             $search = $request->input('search');
             $query->where('tags', 'LIKE', "%$search%");
         }
 
-        $tabulkas = Tabulka::get()->map(function ($tabulka) {
+        $tabulkas = $query->get()->map(function ($tabulka) {
             $wrappedName = wordwrap($tabulka->name, 15, "\n", true);
             $wrappedDescription = wordwrap($tabulka->description, 39, "\n", true);
             $nameLines = substr_count($wrappedName, "\n") + 1;
@@ -74,7 +80,9 @@ class TabulkaController extends Controller
             "tags" => $request->tags,
         ]);
 
-        return redirect("/tabulka")->with("status","Úloha bola úspešne vytvorená");
+        $search = $request->session()->get('search');
+        return redirect()->route('tabulka.index', ['search' => $search])->with("status", "Úloha bola úspešne vytvorená");
+
     }
 
     /**
@@ -112,7 +120,10 @@ class TabulkaController extends Controller
             "tags" => $request->tags,
         ]);
 
-        return redirect("/tabulka")->with("status","Úloha bola úspešne pozmenená");
+        $search = $request->session()->get('search');
+        return redirect()->route('tabulka.index', ['search' => $search])->with("status", "Úloha bola úspešne pozmenená");
+
+
     }
 
     /**
@@ -121,6 +132,8 @@ class TabulkaController extends Controller
     public function destroy(Tabulka $tabulka)
     {
         $tabulka->delete();
-        return redirect("/tabulka")->with("status","Úloha bola úspešne odstránená");
+        $search = request('search') ?? session('search');
+        return redirect()->route('tabulka.index', ['search' => $search])->with("status", "Úloha bola úspešne odstránená");
+
     }
 }
