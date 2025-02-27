@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Models\Tabulka;
+use PHPUnit\Framework\Attributes\Test;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -10,7 +11,7 @@ class TabulkaTest extends TestCase
 {
     use RefreshDatabase;
 
-           /** @test */
+           #[Test]
     public function úloha_môže_byť_vytvorená()
     {
         $data = [
@@ -26,7 +27,7 @@ class TabulkaTest extends TestCase
         $this->assertEquals('Test Úloha', $tabulka->name);
     }
 
-           /** @test */
+           #[Test]
     public function úloha_môže_byť_upravená()
     {
         $tabulka = Tabulka::factory()->create([
@@ -49,7 +50,7 @@ class TabulkaTest extends TestCase
         $this->assertEquals('Upravená Úloha', $tabulka->name);
     }
 
-           /** @test */
+           #[Test]
     public function úloha_môže_byť_odstránená()
     {
         $tabulka = Tabulka::factory()->create();
